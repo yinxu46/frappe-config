@@ -1,0 +1,1 @@
+var FrappeSelectForm = function FrappeSelectForm() {};

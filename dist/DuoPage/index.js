@@ -5,8 +5,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 import React from 'react';
-import { Button, Space } from 'antd';
-import { MysqlFieldTable } from "./..";
+import { FrappeApiForm } from "./..";
 var DuoPage = function DuoPage(props) {
   var _React$useState = React.useState([{
       name: 'id',
@@ -20,27 +19,20 @@ var DuoPage = function DuoPage(props) {
     value = _React$useState2[0],
     setValue = _React$useState2[1];
   var ref = React.useRef();
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(MysqlFieldTable, {
-    ref: ref,
-    defaultValue: value,
-    onChange: function onChange(value) {
-      setValue(value);
-      console.log(value);
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 16
-    }
-  }, /*#__PURE__*/React.createElement(Space, null, /*#__PURE__*/React.createElement(Button, {
-    onClick: function onClick(_) {
-      var _ref$current;
-      console.log((_ref$current = ref.current) === null || _ref$current === void 0 ? void 0 : _ref$current.data);
-    }
-  }, "\u83B7\u53D6\u6570\u636E"), /*#__PURE__*/React.createElement(Button, {
-    onClick: function onClick(_) {
-      var _ref$current2;
-      (_ref$current2 = ref.current) === null || _ref$current2 === void 0 || _ref$current2.add();
-    }
-  }, "\u65B0\u589E\u6570\u636E"))), /*#__PURE__*/React.createElement("div", null, JSON.stringify(value)));
+  var formRef = React.useRef();
+  var cacheValue = localStorage.getItem("form");
+  var _React$useState3 = React.useState(cacheValue ? JSON.parse(cacheValue) : undefined),
+    _React$useState4 = _slicedToArray(_React$useState3, 2),
+    formValue = _React$useState4[0],
+    setFormValue = _React$useState4[1];
+  var onSubmit = function onSubmit(value) {
+    setFormValue(value);
+    localStorage.setItem("form", JSON.stringify(value));
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(FrappeApiForm, {
+    ref: formRef,
+    defaultValue: formValue,
+    onFinish: onSubmit
+  }));
 };
 export default DuoPage;
